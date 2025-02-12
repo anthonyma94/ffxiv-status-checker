@@ -110,7 +110,10 @@ func main() {
 	}
 
 	maxRetryDuration := tickerInterval * 5
-	stateFileName := storage.FileNameForServer(serverName)
+	stateFileName := "data/" + storage.FileNameForServer(serverName)
+	if err := os.MkdirAll("data", 0755); err != nil {
+		log.Fatalf("Error creating data directory: %v", err)
+	}
 
 	if debug {
 		log.Println("DEBUG mode enabled: always posting message and disabling ticker.")

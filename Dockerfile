@@ -15,7 +15,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o ffxiv-status-checker .
 # Final stage: create a minimal runtime image.
 FROM alpine:latest
 
-WORKDIR /root/
+WORKDIR /app/
+RUN mkdir data
+VOLUME /app/data
 # Copy the binary from the builder stage.
 COPY --from=builder /app/ffxiv-status-checker .
 
